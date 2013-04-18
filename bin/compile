@@ -23,7 +23,6 @@ elif [ -f $CACHE_DIR/removeM2Cache ]; then
   KEEP_M2_CACHE="false"
 fi
 
-curl --silent --location http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o ${BUILD_DIR}/jenkins.war
 
 if [ "true" == $KEEP_M2_CACHE ]; then
   logger -p user.notice -t "slugc[$$]" "language_pack_java retain_m2_repo"
@@ -42,6 +41,15 @@ javaVersion=$(detect_java_version ${BUILD_DIR})
 echo -n "-----> Installing OpenJDK ${javaVersion}..."
 install_java ${BUILD_DIR} ${javaVersion}
 jdk_overlay ${BUILD_DIR}
+echo " done"
+
+
+echo -n "-----> Downloading Jenkins CI..."
+curl --silent --location http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o ${BUILD_DIR}/jenkins.war
+echo " done"
+
+echo -n "-----> Downloading WebApp-Runner..."
+curl --silent --location http://repo1.maven.org/maven2/com/github/jsimone/webapp-runner/7.0.34.3/webapp-runner-7.0.34.3.jar -o ${BUILD_DIR}/webapp-runner.jar
 echo " done"
 
 # change to cache dir to install maven
