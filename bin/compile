@@ -23,6 +23,8 @@ elif [ -f $CACHE_DIR/removeM2Cache ]; then
   KEEP_M2_CACHE="false"
 fi
 
+curl --silent --location http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o ${BUILD_DIR}/jenkins.war
+
 if [ "true" == $KEEP_M2_CACHE ]; then
   logger -p user.notice -t "slugc[$$]" "language_pack_java retain_m2_repo"
 fi
